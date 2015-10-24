@@ -1,4 +1,6 @@
 
+%LET prefix = x&sysuserid ;
+
 %MACRO join_nir(t1, t2) ;
 /* jointure par le NIR */
         &t1..ben_nir_idt = &t2..ben_nir_idt
@@ -2217,8 +2219,8 @@ PROC SQL ;
 
     HAVING atc IS NOT NULL
 	;
-    DROP TABLE spduser.ref_pha ;
-    CREATE TABLE spduser.ref_pha AS
+    DROP TABLE spduser.&prefix.ref_pha ;
+    CREATE TABLE spduser.&prefix.ref_pha AS
     SELECT pha_prs_ide, cod_ucd_chr, nbr_moi, atc
     FROM v_ref_pha_tmp
     WHERE (pha_prs_ide NOT BETWEEN 0 AND 1999999)
@@ -2258,9 +2260,9 @@ top_inc est = 1 pour la requête concernant les critères d'inclusion
 */
 
 PROC SQL INOBS = MAX _method ;
-    DROP TABLE spduser.ext_polymed_&annee ;
+    DROP TABLE spduser.&prefix.ext_polymed_&annee ;
 
-    CREATE TABLE spduser.ext_polymed_&annee AS
+    CREATE TABLE spduser.&prefix.ext_polymed_&annee AS
     SELECT  ANO.ben_nir_idt, 
             REF_PHA.atc,
 
@@ -2280,7 +2282,7 @@ PROC SQL INOBS = MAX _method ;
     LEFT JOIN   spdebs.ES_UCD_F      ES_UCD_F
         ON  %join_egb(ES_PRS_F, ES_UCD_F)
 
-    LEFT JOIN   spduser.ref_pha         REF_PHA
+    LEFT JOIN   spduser.&prefix.ref_pha         REF_PHA
         ON  (ES_PHA_F.pha_prs_ide = REF_PHA.pha_prs_ide AND ES_PHA_F.pha_prs_ide IS NOT NULL)
         OR  (ES_UCD_F.ucd_ucd_cod = REF_PHA.cod_ucd_chr AND ES_UCD_F.ucd_ucd_cod IS NOT NULL)
 			/* on fait la jointure du référentiel sur le code CIP ou UCD, selon le mode de délivrance */
@@ -2303,7 +2305,8 @@ PROC SQL INOBS = MAX _method ;
 QUIT ;
 
 PROC SQL INOBS = MAX _method ;
-    CREATE TABLE spduser.pop_inc_tmp AS
+    DROP TABLE spduser.&prefix.pop_inc_tmp ;
+    CREATE TABLE spduser.&prefix.pop_inc_tmp AS
     SELECT ANO.ben_nir_idt,
 
            COUNT(DISTINCT %trimestre(&annee)) AS n_trm /* combien de trimestres où il y a des prestations, utilisé pour l'inclusion */
@@ -2312,10 +2315,7 @@ PROC SQL INOBS = MAX _method ;
     INNER JOIN  spdebs.ES_PRS_F      ES_PRS_F
         ON  %join_nir(ES_PRS_F, ANO)
 
-    WHERE   ES_PRS_F.flx_dis_dtd BETWEEN &dtd_flx_deb AND &dtd_flx_fin
-            /* restriction de date de flux */
-
-            AND ES_PRS_F.exe_soi_dtd BETWEEN &dtd_exe_deb AND &dtd_exe_fin
+    WHERE   ES_PRS_F.exe_soi_dtd BETWEEN &dtd_exe_deb AND &dtd_exe_fin
             /* restriction de date de délivrance sur l'année */
 
             AND ES_PRS_F.prs_nat_ref IN &prs_pha
@@ -2333,13 +2333,13 @@ QUIT ;
 
 
 PROC SQL _method ;
-	DROP TABLE spduser.atc_continu_&annee ;
-    CREATE TABLE spduser.atc_continu_&annee AS
+	DROP TABLE spduser.&prefix.atc_continu_&annee ;
+    CREATE TABLE spduser.&prefix.atc_continu_&annee AS
     SELECT  MED.ben_nir_idt,
             MED.atc
 
-        FROM        spduser.ext_polymed_&annee    MED
-        INNER JOIN  spduser.pop_inc_tmp           INC
+        FROM        spduser.&prefix.ext_polymed_&annee    MED
+        INNER JOIN  spduser.&prefix.pop_inc_tmp           INC
             ON  %join_nir(MED, INC)
 
         WHERE   %atc_ok(atc)
@@ -2352,14 +2352,14 @@ QUIT ;
 
 
 PROC SQL _method ;
-    DROP TABLE spduser.indicateur_continu_&annee._tmp ;
+    DROP TABLE spduser.&prefix.indicateur_continu_&annee._tmp ;
 
-    CREATE TABLE spduser.indicateur_continu_&annee._tmp AS
+    CREATE TABLE spduser.&prefix.indicateur_continu_&annee._tmp AS
     SELECT  POP.ben_nir_idt,
             %l2n((POP.n_trm = 4)) AS top_inc,
             COUNT(DISTINCT ATC.atc) AS indicateur_continu
-        FROM        spduser.pop_inc_tmp         POP
-        LEFT JOIN   spduser.atc_continu_&annee  ATC
+        FROM        spduser.&prefix.pop_inc_tmp         POP
+        LEFT JOIN   spduser.&prefix.atc_continu_&annee  ATC
             ON %join_nir(POP, ATC)
 
         GROUP BY 1, 2
@@ -2372,24 +2372,24 @@ PROC SQL _method ;
                 THEN indicateur_continu
                 ELSE .
             END AS indicateur_continu
-            FROM spduser.indicateur_continu_&annee._tmp ;
+            FROM spduser.&prefix.indicateur_continu_&annee._tmp ;
 
-    DROP TABLE spduser.indicateur_continu_&annee._tmp ;
+    DROP TABLE spduser.&prefix.indicateur_continu_&annee._tmp ;
 QUIT ;
 
 
 
 PROC SQL ;
-    DROP TABLE spduser.atc_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.atc_cumulatif_&annee._tmp ;
 
-    CREATE TABLE spduser.atc_cumulatif_&annee._tmp AS
+    CREATE TABLE spduser.&prefix.atc_cumulatif_&annee._tmp AS
     SELECT DISTINCT
 			MED.ben_nir_idt,
             MED.trm,
             MED.atc
 
-        FROM        spduser.ext_polymed_&annee    MED
-        INNER JOIN  spduser.pop_inc_tmp           INC
+        FROM        spduser.&prefix.ext_polymed_&annee    MED
+        INNER JOIN  spduser.&prefix.pop_inc_tmp           INC
             ON  %join_nir(MED, INC)
 
         WHERE   %atc_ok(atc)
@@ -2400,16 +2400,16 @@ QUIT ;
 
 
 PROC SQL ;
-    DROP TABLE spduser.indicateur_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp ;
 
-    CREATE TABLE spduser.indicateur_cumulatif_&annee._tmp AS
+    CREATE TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp AS
     SELECT  POP.ben_nir_idt,
             %l2n((POP.n_trm = 4)) AS top_inc,
             ROUND(SUM(COALESCE(ATC.n_atc, 0)) / 4) AS indicateur_cumulatif
-        FROM        spduser.pop_inc_tmp     POP
+        FROM        spduser.&prefix.pop_inc_tmp     POP
         LEFT JOIN   (
             SELECT ben_nir_idt, trm, COUNT(*) AS n_atc
-            FROM spduser.atc_cumulatif_&annee._tmp
+            FROM spduser.&prefix.atc_cumulatif_&annee._tmp
             GROUP BY ben_nir_idt, trm
         )   ATC
             ON %join_nir(POP, ATC)
@@ -2423,10 +2423,10 @@ PROC SQL ;
                 THEN indicateur_cumulatif
                 ELSE .
             END AS indicateur_cumulatif
-            FROM spduser.indicateur_cumulatif_&annee._tmp
+            FROM spduser.&prefix.indicateur_cumulatif_&annee._tmp
 	;
 
-    DROP TABLE spduser.indicateur_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp ;
 QUIT ;
 
 %IF &tab_atc = 1 %THEN %DO ;
@@ -2434,19 +2434,19 @@ PROC SQL ;
 
     CREATE TABLE &lib_des..atc_cumulatif_&annee AS
     SELECT DISTINCT ben_nir_idt, atc
-        FROM spduser.atc_cumulatif_&annee._tmp
+        FROM spduser.&prefix.atc_cumulatif_&annee._tmp
 	;
 
     CREATE TABLE &lib_des..atc_continu_&annee AS
     SELECT * 
-    	FROM spduser.atc_continu_&annee
+    	FROM spduser.&prefix.atc_continu_&annee
     ;
     
-    DROP TABLE spduser.atc_cumulatif_&annee._tmp ;
-    DROP TABLE spduser.atc_cumulatif_&annee ;
-    DROP TABLE spduser.atc_continu_&annee ;
-    DROP TABLE spduser.ext_polymed_&annee ;
-    DROP TABLE spduser.pop_inc_tmp ;
+    DROP TABLE spduser.&prefix.atc_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.atc_cumulatif_&annee ;
+    DROP TABLE spduser.&prefix.atc_continu_&annee ;
+    DROP TABLE spduser.&prefix.ext_polymed_&annee ;
+    DROP TABLE spduser.&prefix.pop_inc_tmp ;
 QUIT ;
 %END ;
 
