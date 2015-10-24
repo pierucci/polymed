@@ -2266,8 +2266,7 @@ PROC SQL INOBS = MAX _method ;
 
             ES_PRS_F.exe_soi_dtd,
 
-			 %trimestre(&annee) AS trm,
-         /*   %trimestre(&annee) AS trm,*/ /* le trimestre d'éxécution de la prestation */
+	    %trimestre(&annee) AS trm, /* le trimestre d'éxécution de la prestation */
 
             MAX(REF_PHA.nbr_moi) AS nbr_moi /* si 2 médicaments de la même classe ATC sont délivrés le même jour,
                                                 on prend le plus grand conditionnement */
@@ -2286,12 +2285,7 @@ PROC SQL INOBS = MAX _method ;
         OR  (ES_UCD_F.ucd_ucd_cod = REF_PHA.cod_ucd_chr AND ES_UCD_F.ucd_ucd_cod IS NOT NULL)
 			/* on fait la jointure du référentiel sur le code CIP ou UCD, selon le mode de délivrance */
 
-    WHERE   ES_PRS_F.flx_dis_dtd BETWEEN &dtd_flx_deb AND &dtd_flx_fin
-            AND (ES_PHA_F.flx_dis_dtd IS NULL OR ES_PHA_F.flx_dis_dtd BETWEEN &dtd_flx_deb AND &dtd_flx_fin)
-            AND (ES_UCD_F.flx_dis_dtd IS NULL OR ES_UCD_F.flx_dis_dtd BETWEEN &dtd_flx_deb AND &dtd_flx_fin)
-            /* restriction de date de flux */
-
-            AND ES_PRS_F.exe_soi_dtd BETWEEN &dtd_exe_deb AND &dtd_exe_fin
+    WHERE   ES_PRS_F.exe_soi_dtd BETWEEN &dtd_exe_deb AND &dtd_exe_fin
             /* restriction de date de délivrance sur l'année */
 
             AND ES_PRS_F.prs_nat_ref IN &prs_pha
