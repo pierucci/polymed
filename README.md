@@ -53,6 +53,8 @@ Chloé Le Cossec (chloe.lecossec@gmail.com) et Antoine Filipovic-Pierucci (pieru
 
 Elodie Moutengou (e.moutengou@invs.sante.fr) et Francis Chin (f.chin@invs.sante.fr).
 
+Envoyez vos critiques, remarques et pistes d'amélioration à : ind-polymed-sniiram@googlegroups.com
+
 ## Références
 Rapport Irdes X. QES X.
 
