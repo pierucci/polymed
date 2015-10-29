@@ -51,7 +51,7 @@ Chloé Le Cossec (chloe.lecossec@gmail.com) et Antoine Filipovic-Pierucci (pieru
 
 ## Mainteneurs
 
-Elodie Moutengou (e.moutengou@invs.sante.fr) et Laurence Mandereau-Bruno (l.mandereau-bruno@invs.sante.fr).
+Elodie Moutengou (e.moutengou@invs.sante.fr) et Francis Chin (f.chin@invs.sante.fr).
 
 ## Références
 Rapport Irdes X. QES X.
