@@ -8,7 +8,7 @@ Calcule les indicateurs continus et cumulatifs de polymédication en prenant en 
 
 `annee` = l'année où les indicateurs sont calculés, 4 chiffres.
 
-`tab_atc` = retouner les classes ATC contribuant aux indicateurs ? (0 = non, 1 = oui, 0 par défaut).
+`tab_atc` = retouner les classes ATC contribuant aux indicateurs ? (`0` = non, `1` = oui, `0` par défaut).
 
 `lib_des` = librairie SAS de destination, `WORK` par défaut.
 
@@ -58,7 +58,7 @@ Rapport Irdes X. QES X.
 
 ## Exemples
 
-```
+```SAS
 /* calcule les indicateurs de polymédication pour 2013 pour une centaine d'individus */
 
 /* EBG */
