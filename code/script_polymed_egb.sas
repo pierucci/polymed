@@ -2352,9 +2352,9 @@ QUIT ;
 
 
 PROC SQL _method ;
-    DROP TABLE spduser.&prefix.indicateur_continu_&annee._tmp ;
+    DROP TABLE spduser.&prefix.ind_continu_&annee._tmp ;
 
-    CREATE TABLE spduser.&prefix.indicateur_continu_&annee._tmp AS
+    CREATE TABLE spduser.&prefix.ind_continu_&annee._tmp AS
     SELECT  POP.ben_nir_idt,
             %l2n((POP.n_trm = 4)) AS top_inc,
             COUNT(DISTINCT ATC.atc) AS indicateur_continu
@@ -2372,9 +2372,9 @@ PROC SQL _method ;
                 THEN indicateur_continu
                 ELSE .
             END AS indicateur_continu
-            FROM spduser.&prefix.indicateur_continu_&annee._tmp ;
+            FROM spduser.&prefix.ind_continu_&annee._tmp ;
 
-    DROP TABLE spduser.&prefix.indicateur_continu_&annee._tmp ;
+    DROP TABLE spduser.&prefix.ind_continu_&annee._tmp ;
 QUIT ;
 
 
@@ -2400,9 +2400,9 @@ QUIT ;
 
 
 PROC SQL ;
-    DROP TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.ind_cumulatif_&annee._tmp ;
 
-    CREATE TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp AS
+    CREATE TABLE spduser.&prefix.ind_cumulatif_&annee._tmp AS
     SELECT  POP.ben_nir_idt,
             %l2n((POP.n_trm = 4)) AS top_inc,
             ROUND(SUM(COALESCE(ATC.n_atc, 0)) / 4) AS indicateur_cumulatif
@@ -2423,10 +2423,10 @@ PROC SQL ;
                 THEN indicateur_cumulatif
                 ELSE .
             END AS indicateur_cumulatif
-            FROM spduser.&prefix.indicateur_cumulatif_&annee._tmp
+            FROM spduser.&prefix.ind_cumulatif_&annee._tmp
 	;
 
-    DROP TABLE spduser.&prefix.indicateur_cumulatif_&annee._tmp ;
+    DROP TABLE spduser.&prefix.ind_cumulatif_&annee._tmp ;
 QUIT ;
 
 %IF &tab_atc = 1 %THEN %DO ;
@@ -2441,14 +2441,13 @@ PROC SQL ;
     SELECT * 
     	FROM spduser.&prefix.atc_continu_&annee
     ;
-    
+QUIT ;
+%END ;
+PROC SQL ;
     DROP TABLE spduser.&prefix.atc_cumulatif_&annee._tmp ;
     DROP TABLE spduser.&prefix.atc_cumulatif_&annee ;
     DROP TABLE spduser.&prefix.atc_continu_&annee ;
     DROP TABLE spduser.&prefix.ext_polymed_&annee ;
     DROP TABLE spduser.&prefix.pop_inc_tmp ;
 QUIT ;
-%END ;
-
 %MEND ;
-
