@@ -14,6 +14,8 @@ Calcule les indicateurs continus et cumulatifs de polymédication en prenant en 
 
 ## Détails
 
+Le référentiel doit d'abord être généré en lançant le script `script_ref_pha.sas`.
+
 Nécessite un profil avec la date de soins précise (`EXE_SOI_DTD` visible).
 
 Les indicateurs sont calculés pour les individus ayant des prestations affinées de pharmacie (officine ou rétrocession) pour chaque trimestre de l'année étudiée.
@@ -25,7 +27,6 @@ L'indicateur cumulatif correspond à la moyenne annuelle du nombre de molécules
 La prise en compte des associations de molécules concerne uniquement les traitements à action systémique.
 
 Le détail des médicaments exclus du calcul des indicateurs est disponible dans le Rapport Irdes X.
-
 
 ## Attention
 
@@ -61,7 +62,9 @@ Rapport Irdes X. QES X.
 ## Exemples
 
 ```SAS
-/* calcule les indicateurs de polymédication pour 2013 pour une centaine d'individus */
+/* calcule les indicateurs de polymédication pour 2013 pour une centaine d'individus
+
+Le référentiel doit d'abord être généré en lançant le script script_ref_pha.sas. */
 
 /* EBG */
 
