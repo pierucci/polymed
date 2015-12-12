@@ -251,9 +251,8 @@ atc_ini = "C03EA" ; principe_actif = "methychlothiazide" ; atc_cor = "C03AA08" ;
 atc_ini = "C03EA" ; principe_actif = "triamterene" ; atc_cor = "C03DB02" ; OUTPUT ; 
 atc_ini = "J01RA04" ; principe_actif = "spiramycine" ; atc_cor = "J01FA02" ; OUTPUT ; 
 atc_ini = "J01RA04" ; principe_actif = "metronidazole" ; atc_cor = "J01XD01" ; OUTPUT ; 
-atc_ini = "A02BD08" ; principe_actif = "bismuth" ; atc_cor = "A02BX05" ; OUTPUT ; 
-atc_ini = "A02BD08" ; principe_actif = "tetracycline" ; atc_cor = "J01AA07" ; OUTPUT ; 
-atc_ini = "A02BD08" ; principe_actif = "metronidazole" ; atc_cor = "J01XD01" ; OUTPUT ; 
+atc_ini = "C09DA04" ; principe_actif = "irbesartan" ; atc_cor = "C09CA04" ; OUTPUT ; 
+atc_ini = "C09DA04" ; principe_actif = "hydrochlorothiazide" ; atc_cor = "C03AA03" ; OUTPUT ; 
 RUN ;
 DATA work.ref_3mo ;
     LENGTH
