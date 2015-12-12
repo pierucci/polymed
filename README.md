@@ -57,7 +57,7 @@ Elodie Moutengou (e.moutengou@invs.sante.fr) et Francis Chin (f.chin@invs.sante.
 Envoyez vos critiques, remarques et pistes d'amélioration à : ind-polymed-sniiram@googlegroups.com
 
 ## Références
-Rapport Irdes X. QES X.
+Rapport Irdes [La polymédication au regard de différents indicateurs de sa mesure : impact sur la prévalence, les classes thérapeutiques concernées et les facteurs associés](http://www.irdes.fr/recherche/2015/rapport-562-la-polymedication-au-regard-de-differents-indicateurs-de-sa-mesure.html). QES X.
 
 ## Exemples
 
