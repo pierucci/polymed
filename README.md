@@ -57,7 +57,7 @@ Elodie Moutengou (e.moutengou@invs.sante.fr) et Francis Chin (f.chin@invs.sante.
 Envoyez vos critiques, remarques et pistes d'amélioration à : ind-polymed-sniiram@googlegroups.com
 
 ## Références
-Rapport Irdes [La polymédication au regard de différents indicateurs de sa mesure : impact sur la prévalence, les classes thérapeutiques concernées et les facteurs associés](http://www.irdes.fr/recherche/2015/rapport-562-la-polymedication-au-regard-de-differents-indicateurs-de-sa-mesure.html). QES X.
+Rapport Irdes [La polymédication au regard de différents indicateurs de sa mesure : impact sur la prévalence, les classes thérapeutiques concernées et les facteurs associés](http://www.irdes.fr/recherche/2015/rapport-562-la-polymedication-au-regard-de-differents-indicateurs-de-sa-mesure.html). QES [Mesurer la polymédication chez les personnes âgées : impact de la méthode sur la prévalence et les classes thérapeutiques](http://www.irdes.fr/presse/communiques/145-mesurer-la-polymedication-chez-les-personnes-agees.html).
 
 ## Exemples
 
