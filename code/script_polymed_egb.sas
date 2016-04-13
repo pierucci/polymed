@@ -37,7 +37,7 @@ CASE
 END 
 %MEND ;
 
-/* liste des codes prestation PHA ou UCD (générée empiriquement,
+/* liste des codes prestation PHA ou UCD (generee empiriquement,
  c'est les lignes de PRS qui ont des correspondances dans ces tables) */
 
 %LET prs_pha = (3311,3312,3313,3314,3315,3316,3328,3331,3332,3341,3356,4382,9566) ;
@@ -65,7 +65,7 @@ AND &atc NOT LIKE 'V20%')
 %MEND ;
 
 %MACRO l2n(x) ;
-/* transforme logique en numérique, indispensable pour ORACLE */
+/* transforme logique en numerique, indispensable pour ORACLE */
 CASE WHEN (&x) THEN 1 ELSE 0 END
 %MEND ;
 

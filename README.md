@@ -68,9 +68,11 @@ Le référentiel doit d'abord être généré en lançant le script script_ref_p
 
 /* EBG */
 
+%LET prefix = x&sysuserid ;
+
 PROC SQL ;
-  DROP TABLE spduser.list_nir ;
-  CREATE TABLE spduser.list_nir AS
+  DROP TABLE spduser.&prefix.list_nir ;
+  CREATE TABLE spduser.&prefix.list_nir AS
   SELECT DISTINCT ben_nir_idt
   FROM consoegb.conso201304(OBS = 100)
   ;
